@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Wry&#39;s Ramblings</title>
+    <title>Posts on wrydeas</title>
     <link>wry-wsac.github.io/posts/</link>
-    <description>Recent content in Posts on Wry&#39;s Ramblings</description>
+    <description>Recent content in Posts on wrydeas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2020 18:46:51 -0700</lastBuildDate><atom:link href="wry-wsac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Sep 2020 15:25:22 -0700</lastBuildDate><atom:link href="wry-wsac.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vue 2 Project Perfect Org</title>
+      <link>wry-wsac.github.io/posts/vue-2-project-perfect-org/</link>
+      <pubDate>Tue, 29 Sep 2020 15:25:22 -0700</pubDate>
+      
+      <guid>wry-wsac.github.io/posts/vue-2-project-perfect-org/</guid>
+      <description>Vue 2 is coming to an end. It&amp;rsquo;s only appropriate that the Ultimate Vue Project Organization Pattern™ (UVPOP) would finally be achieved.
+There are only a few small ideas, most unoriginal, and it&amp;rsquo;s mostly around organization of modules and their related files and data.
+File organization This is heavily inspired by Vue-CLI architecture. The idea is that you should have pages split into folders with page-level components (in this example, titled _page.</description>
+    </item>
+    
     <item>
       <title>Tracking Loading State</title>
       <link>wry-wsac.github.io/posts/tracking-loading-state/</link>
