@@ -27,29 +27,29 @@
     
     
     <meta property="og:title" content="Tracking Loading State" />
-<meta property="og:description" content="Problem: SPAs have UI components and UX paths that are dependent on asynchronous request states.
-The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggestor and a gender select/radio option. I know it&rsquo;s a bit of a stretch.
-Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-component v-if=isNotLoading /&gt; &lt;loading-animation v-if=isLoading /&gt; &lt;/main&gt; &lt;/template&gt; &lt;script&gt; export default { // ." />
+<meta property="og:description" content="WELCOME to my first blog post. Today I want to outline some state management patterns I&rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.
+The problem I&rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.
+The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="wry-wsac.github.io/posts/tracking-loading-state/" />
 <meta property="article:published_time" content="2020-09-21T18:46:51-07:00" />
 <meta property="article:modified_time" content="2020-09-21T18:46:51-07:00" />
 <meta itemprop="name" content="Tracking Loading State">
-<meta itemprop="description" content="Problem: SPAs have UI components and UX paths that are dependent on asynchronous request states.
-The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggestor and a gender select/radio option. I know it&rsquo;s a bit of a stretch.
-Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-component v-if=isNotLoading /&gt; &lt;loading-animation v-if=isLoading /&gt; &lt;/main&gt; &lt;/template&gt; &lt;script&gt; export default { // .">
+<meta itemprop="description" content="WELCOME to my first blog post. Today I want to outline some state management patterns I&rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.
+The problem I&rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.
+The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option.">
 <meta itemprop="datePublished" content="2020-09-21T18:46:51-07:00" />
 <meta itemprop="dateModified" content="2020-09-21T18:46:51-07:00" />
-<meta itemprop="wordCount" content="1603">
+<meta itemprop="wordCount" content="1822">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Tracking Loading State"/>
-<meta name="twitter:description" content="Problem: SPAs have UI components and UX paths that are dependent on asynchronous request states.
-The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggestor and a gender select/radio option. I know it&rsquo;s a bit of a stretch.
-Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-component v-if=isNotLoading /&gt; &lt;loading-animation v-if=isLoading /&gt; &lt;/main&gt; &lt;/template&gt; &lt;script&gt; export default { // ."/>
+<meta name="twitter:description" content="WELCOME to my first blog post. Today I want to outline some state management patterns I&rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.
+The problem I&rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.
+The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option."/>
 
 	
   </head>
@@ -145,10 +145,11 @@ Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-com
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Problem: SPAs have UI components and UX paths that are dependent on asynchronous request states.</p>
-<p>The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggestor and a gender select/radio option. I know it&rsquo;s a bit of a stretch.</p>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>WELCOME to my first blog post. Today I want to outline some state management patterns I&rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.</p>
+<p>The problem I&rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.</p>
+<p>The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option. I know it&rsquo;s a bit of a stretch.</p>
 <h1 id="basic-solution">Basic solution</h1>
-<h2 id="datasetlength">dataset.length</h2>
+<h2 id="check-datasetlength">Check dataset.length</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
 	&lt;<span style="color:#f92672">main</span>&gt;
 		&lt;<span style="color:#f92672">registration-component</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-if</span><span style="color:#960050;background-color:#1e0010">=</span><span style="color:#a6e22e">isNotLoading</span> /&gt;
@@ -166,7 +167,8 @@ Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-com
 </span><span style="color:#75715e"></span>	}
 }
 &lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><p>This is dirt simple to implement and understand. It also avoids some of the technical and cognitive overhead of implementing a programmatic state management or message polling system. It also obscures the entire registration component based on loading data. If the component is unusable without seed data this is fine, but generally the user can interact with parts of a form like this without waiting for the application to load LUTs.</p>
+</code></pre></div><p>This is dirt simple to implement and understand. It also obscures the entire registration component based on loading data. If the component is unusable without seed data this is fine, but generally the user can interact with parts of a form like this without waiting for the application to load LUTs.</p>
+<p>Obviously there are limitations to this approach around loading multiple or empty data sets. If an empty dataset is acceptable then this isLoading function is broken.</p>
 <h2 id="localize-it">localize it</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
 	&lt;<span style="color:#f92672">div</span>&gt;
@@ -191,7 +193,8 @@ Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-com
 		&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">state</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">loading</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">text</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">typedState</span> /&gt;
 	&lt;/<span style="color:#f92672">div</span>&gt;
 &lt;/<span style="color:#f92672">template</span>&gt;
-</code></pre></div><p>Maybe we don&rsquo;t want the user submitting if lookups haven&rsquo;t loaded though. Perhaps the lookups codify state or other registration parameters into an acceptable format, perhaps for an API we do not control, requiring us to stricly handle data passed to it. We may then disable the submit button if it hasn&rsquo;t loaded. This means we need to know the loading state of these comoponents. The ever dreaded childen→parent communication 😨</p>
+</code></pre></div><h2 id="wrapping-component">Wrapping component</h2>
+<p>Maybe we don&rsquo;t want the user submitting if lookups haven&rsquo;t loaded though. Perhaps the lookups codify state or other registration parameters into an acceptable format, perhaps for an API we do not control, requiring us to strictly handle data passed to it. We may then disable the submit button if it hasn&rsquo;t loaded. This means we need to know the loading state of these components. The ever dreaded children→parent communication 😨</p>
 <p>Not to fret. We can use a pattern like that in <a href="https://logaretm.github.io/vee-validate/api/validation-provider.html">vee-validate&rsquo;s <code>&lt;ValidationObserver /&gt;</code></a> component to accomplish the same, though it will in most cases ruin the encapsulation described above (noooo! I thought we might finally escape the rains of repetition&hellip;)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
 	&lt;<span style="color:#f92672">div</span>&gt;
@@ -227,23 +230,24 @@ Basic solution dataset.length &lt;template&gt; &lt;main&gt; &lt;registration-com
 While annihilating most of the encapsulation, it does provide other opportunities. The <code>&lt;component&gt;</code> above can be replaced with a default slot, for example, which means the UI element doesn&rsquo;t need to be defined in terms of being a child of <code>&lt;DataLoadingComponent&gt;</code>. In this example we have both a state select box and a gender select box, the former passing a component as a prop and the latter using a slot.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">template</span>&gt;
 	&lt;<span style="color:#f92672">form</span>&gt;
-		&lt;<span style="color:#f92672">data-loaded-component-with-props</span>
+		&lt;<span style="color:#f92672">data-loading-component-with-props</span>
 			<span style="color:#a6e22e">:generator</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;api.getStates&#34;</span>
 			<span style="color:#a6e22e">component</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;state-selector&#34;</span>
 		/&gt;
-		&lt;<span style="color:#f92672">data-loaded-component-with-slots</span>
+		&lt;<span style="color:#f92672">data-loading-component-with-slots</span>
 			<span style="color:#a6e22e">:generator</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;api.getStates&#34;</span>
 		&gt;
 			&lt;<span style="color:#f92672">select</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">gender</span> <span style="color:#a6e22e">slot-scope</span><span style="color:#f92672">=</span><span style="color:#e6db74">genders</span>&gt;
 				&lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gender in genders&#34;</span>&gt;{{ gender }}&lt;/<span style="color:#f92672">option</span>&gt;
 			&lt;/<span style="color:#f92672">select</span>&gt;
-		&lt;/<span style="color:#f92672">data-loaded-component</span>&gt;
+		&lt;/<span style="color:#f92672">data-loading-component</span>&gt;
 	&lt;/<span style="color:#f92672">form</span>&gt;
 &lt;/<span style="color:#f92672">template</span>&gt;
 </code></pre></div><h1 id="refinements">Refinements</h1>
-<p>Depending on the page requirements maybe the <code>&lt;DataLoadedComponent&gt;</code> is overkill. Or maybe there&rsquo;s a philosophical opposition to wrapper components, like you might encounter working on a team with me. ⚔</p>
+<p>Depending on the page requirements maybe the <code>&lt;DataLoadingComponent&gt;</code> is overkill. Or maybe there&rsquo;s a philosophical opposition to wrapper components, like you might encounter working on a team with me. ⚔</p>
 <p>In order to maintain an awareness about what has loaded and what hasn&rsquo;t, and, also important but outside of the scope of this article TRACK ERROR state as derived from request statuses, we&rsquo;re going to have to implement a centralized store for application state. There are many ways to do this. One is the event bus which I&rsquo;m not going to bother demoing: I don&rsquo;t know how. Rather, I don&rsquo;t know how to do it without feeling dirty.</p>
-<p>Option two would be an FSM-style API like Vuex. One model I&rsquo;ve worked with quite a bit recently:</p>
+<p>Option two would be an FSM-style API like Vuex. I&rsquo;ve worked with one model quite a bit recently.</p>
+<h2 id="fsm-request-history">FSM request history</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">DATA_REQUESTED</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;DATA_REQUESTED&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">DATA_RECEIVED</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;DATA_RECEIVED&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ERROR_RECEIVED</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;ERROR_RECEIVED&#39;</span>);
@@ -267,7 +271,7 @@ While annihilating most of the encapsulation, it does provide other opportunitie
 	, <span style="color:#a6e22e">loadingData</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">state</span> =&gt; <span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">history</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">event</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">DATA_REQUESTED</span>
 	, <span style="color:#a6e22e">receivedError</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">state</span> =&gt; <span style="color:#a6e22e">state</span>.<span style="color:#a6e22e">history</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">event</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">ERROR_RECEIVED</span> 
 };
-</code></pre></div><p>The getters need to be slightly less naive to avoid reactive <code>TypeError</code>s, but I leave that as an exercise to the (pull request) reader. A build pattern can be used to attach this to a store for each LUT object, eg:</p>
+</code></pre></div><p>The getters need to be slightly less naive to avoid reactive <code>TypeError</code>s, but I leave that as an exercise to the (pull request) reader. A build pattern can be used to attach this to a store for each LUT object, for example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">modules</span><span style="color:#f92672">:</span> {
 	<span style="color:#a6e22e">LUT</span><span style="color:#f92672">:</span> {
 		<span style="color:#a6e22e">namespaced</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>
@@ -277,18 +281,18 @@ While annihilating most of the encapsulation, it does provide other opportunitie
 		}
 	}
 }
-</code></pre></div><p>And then code up fetching actions that looking handsome like:</p>
-<pre><code class="language-javscript" data-lang="javscript">async function fetchStates({commit}) {
-	commit('LUT/states/requestData', 'fetchStates');
-	try {
-		const states = await this.api.states.get();
-		commit('LUT/states/setStates', states);
-		commit('LUT/states/recordData', states);
-	} catch (e) {
-		commit('LUT/states/recordError', e);
+</code></pre></div><p>And then code up fetching actions looking handsome like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fetchStates</span>({<span style="color:#a6e22e">commit</span>}) {
+	<span style="color:#a6e22e">commit</span>(<span style="color:#e6db74">&#39;LUT/states/requestData&#39;</span>, <span style="color:#e6db74">&#39;fetchStates&#39;</span>);
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">states</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">api</span>.<span style="color:#a6e22e">states</span>.<span style="color:#a6e22e">get</span>();
+		<span style="color:#a6e22e">commit</span>(<span style="color:#e6db74">&#39;LUT/states/setStates&#39;</span>, <span style="color:#a6e22e">states</span>);
+		<span style="color:#a6e22e">commit</span>(<span style="color:#e6db74">&#39;LUT/states/recordData&#39;</span>, <span style="color:#a6e22e">states</span>);
+	} <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+		<span style="color:#a6e22e">commit</span>(<span style="color:#e6db74">&#39;LUT/states/recordError&#39;</span>, <span style="color:#a6e22e">e</span>);
 	}
 }
-</code></pre><p>With a tiny bit of refactoring an action generator could be made. Just think how much would actually differ from fetchStates to fetchGenders. Just some constants that could be extrapolated by reflection or parameterization.</p>
+</code></pre></div><p>With a tiny bit of refactoring an action generator could be made. Just think how much would actually differ from fetchStates to fetchGenders. Just some constants that could be extrapolated by reflection or parameterization.</p>
 <p>This can be folded into a larger component such as:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">script</span>&gt;
 <span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span> {
@@ -309,7 +313,7 @@ While annihilating most of the encapsulation, it does provide other opportunitie
 </span><span style="color:#75715e"></span>}
 &lt;/<span style="color:#f92672">script</span>&gt;
 </code></pre></div><p>Now we can disable our submit button using <code>vm.isLoading</code> and disable individual components as needed with their respective loading attributes, and we can see if we have an error, and perhaps display it, or in someway notify the user that today just isn&rsquo;t their day.</p>
-<p>Now we&rsquo;re also in a place where we can start to easily reason about derivative states, and even use tools to identify unexpected emergent application states. With the above JS and a template filled with <code>v-if=isLoading</code> sorts of conditional rendering directives, we can model application state as sets of loading and error values, which makes it easier to write tests that are less closely coupled with implementation than if we ran a <code>&lt;DataLoadedComponent&gt;</code> arch as above. Initialize the component, stub the computed props, and make assertions about the properties you&rsquo;d expect from the derivative state:</p>
+<p>Now we&rsquo;re also in a place where we can start to easily reason about derivative states, and even use tools to identify unexpected emergent application states. With the above JS and a template filled with <code>v-if=isLoading</code> sorts of conditional rendering directives, we can model application state as sets of loading and error values, which makes it easier to write tests that are less closely coupled with implementation than if we ran a <code>&lt;DataLoadingComponent&gt;</code> arch as above. Initialize the component, stub the computed props, and make assertions about the properties you&rsquo;d expect from the derivative state:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">test</span>(<span style="color:#e6db74">&#39;states loaded successfully, gender errored out&#39;</span>, () =&gt; {
 	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">wrapper</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">mount</span>(<span style="color:#a6e22e">RegistrationComponent</span>, {
 		<span style="color:#a6e22e">computed</span><span style="color:#f92672">:</span> {
@@ -324,16 +328,17 @@ While annihilating most of the encapsulation, it does provide other opportunitie
 </span><span style="color:#75715e">			etc */</span>);
 });
 </code></pre></div><p>Note: stubbing the store properties is a better way to achieve this, but uglier to demo.</p>
+<p>Now that we&rsquo;ve developed this method, let me point out: it sucks for frequent chatter, it becomes quite hefty when you have a lot of loading states to track (loadingStates, loadingGenders, loadingInstitutions, loadingAcademicPrograms, loadingAcademicYears = 2^(5*2) states to understand 🤯) and it absolutely fails in its current form if the same request has to be made multiple times. A reducer for history can of course be written in the latter case but it&rsquo;s a very messy way to handle multiple app-lifecycle requests on the same resource.</p>
 <h1 id="and-so-on">And so on</h1>
-<p>There are of ways to develop on this theme depending on needs. Two options that immediately come to mind are using a progressive FSM like xstate to model application state as a function of ongoing network access, and using workers to encapsulate requests and move them out of the UI thread for performativity.</p>
+<p>Software development is like writing music: there are many ways to elaborate on a given theme. The finite state machine pattern outlined above is just one, and it&rsquo;s not even one that necessarily overrides the observer pattern above that. The two can be used together given an application that makes it worth it. And there are still other methods of approaching this problem or fine-tuning the solution. Two options that immediately come to mind that I only have a tiny bit of experience with but would like to experiment on more are using a progressive FSM like xstate to model application state as a function of ongoing network access and using workers to encapsulate requests and move them out of the UI thread for performativity.</p>
 <h2 id="progressive-fsm">Progressive FSM</h2>
-<p>The <a href="https://xstate.js.org">xstate library</a> offers some cool approachs for this. I don&rsquo;t want to make this article too specialized by focusing on any singular library (even though much of this has been directed at Vue development), but its event-driven state charts are a useful paradigm, especially in multi-part SPAs, where advancing to a &ldquo;stage&rdquo; of the application is user and/or network driven. It&rsquo;s design choice to make promises, async generators and Rx observables first-class state machines that can compose with more traditional FSM paradigms really makes it shine here. It can also be be used to implement <a href="https://timdeschryver.dev/blog/generated-tests-with-xstate-and-cypress">reflective, generative property-based state testing</a>.</p>
+<p>The <a href="https://xstate.js.org">xstate library</a> offers some cool ways to approach this. I don&rsquo;t want to make this article too specialized by focusing on any singular library (even though much of this has been directed at Vue development), but its event-driven state charts are a useful paradigm, especially in multi-part SPAs, where advancing to a &ldquo;stage&rdquo; of the application is user and/or network driven. It&rsquo;s design choice to make promises, async generators and Rx observables first-class state machines that can compose with more traditional FSM paradigms really makes it shine here. It can also be be used to implement <a href="https://timdeschryver.dev/blog/generated-tests-with-xstate-and-cypress">reflective, generative property-based state testing</a>.</p>
 <p>For our <code>&lt;RegistrationComponent&gt;</code> perhaps we have states and gender on separate pages. After we collect some identity data like gender and race, we&rsquo;ll confirm they are eligible and only if they are proceed to the contact info screen where the states dropdown is located. Only upon reaching the states dropdown should we even bother loading it (though we can estimate when we will get to it and prefetch it to avoid loading stuff, but only when we know we will get to that application state!) to avoid wasting any user time. I&rsquo;ve used the xstate visualizer to outline an example state machine:
 <img src="images/xstatechart.png" alt="xstate flow chart"></p>
 <p>The <a href="https://xstate.js.org/docs/tutorials/reddit.html">Reddit API tutorial</a> is a great place to see examples of this paradigm.</p>
 <h2 id="workers">Workers</h2>
 <p>An idea I&rsquo;ve only just begun to toy with is sourcing all frontend API requests through a worker. On page-initialization the worker is initialized and maintains an internal state of requests and their states. This is the approach <a href="https://github.com/developit/stockroom">stockroom</a> uses. Workers have the very clear benefit of removing state and request computation from the UI thread, making SPAs more performative over all, but they also look a bit like magic in a repo, perhaps owing to their underutilization.</p>
-<p>There are examples out there, including one I found specifically targeting <a href="https://logaretm.com/blog/2019-12-21-vuex-off-mainthread/">concurrent vuex architecture</a>, of how to deploy worker state machines. With the web worker&rsquo;s limitated API, message-based FSM stores seem like a natural venue for exploration.</p>
+<p>There are examples out there, including one I found specifically targeting <a href="https://logaretm.com/blog/2019-12-21-vuex-off-mainthread/">concurrent vuex architecture</a>, of how to deploy worker state machines. With the web worker&rsquo;s limited API, message-based FSM stores seem like a natural venue for exploration.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>None. This is an ongoing discussion and the ideal solution can only be identified on a problem-by-problem basis. However, I hope this has provided some value in the form of perhaps illuminating some previously unconsidered solutions or expanding on their limitations and implicit expectations.</p>
 <ul class="pa0">

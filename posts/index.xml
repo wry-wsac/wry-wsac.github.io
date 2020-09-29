@@ -13,9 +13,9 @@
       <pubDate>Mon, 21 Sep 2020 18:46:51 -0700</pubDate>
       
       <guid>wry-wsac.github.io/posts/tracking-loading-state/</guid>
-      <description>Problem: SPAs have UI components and UX paths that are dependent on asynchronous request states.
-The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggestor and a gender select/radio option. I know it&amp;rsquo;s a bit of a stretch.
-Basic solution dataset.length &amp;lt;template&amp;gt; &amp;lt;main&amp;gt; &amp;lt;registration-component v-if=isNotLoading /&amp;gt; &amp;lt;loading-animation v-if=isLoading /&amp;gt; &amp;lt;/main&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script&amp;gt; export default { // .</description>
+      <description>WELCOME to my first blog post. Today I want to outline some state management patterns I&amp;rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.
+The problem I&amp;rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.
+The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option.</description>
     </item>
     
   </channel>
