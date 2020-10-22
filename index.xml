@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>wrydeas</title>
-    <link>wry-wsac.github.io/</link>
+    <link>/</link>
     <description>Recent content on wrydeas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Oct 2020 14:31:34 -0700</lastBuildDate><atom:link href="wry-wsac.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Oct 2020 14:31:34 -0700</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Caches, States, and Stores: Oh My!</title>
-      <link>wry-wsac.github.io/posts/caches-states-and-stores-oh-my/</link>
+      <link>/posts/caches-states-and-stores-oh-my/</link>
       <pubDate>Wed, 21 Oct 2020 14:31:34 -0700</pubDate>
       
-      <guid>wry-wsac.github.io/posts/caches-states-and-stores-oh-my/</guid>
+      <guid>/posts/caches-states-and-stores-oh-my/</guid>
       <description>In a recent discussion with coworkers we kept having to clarify the difference between a cache, a state, and a store. The confusion was generally caused as a result of vaguely discussing Vuex and the capacity of Vue 3&amp;rsquo;s composition API to substitute it for a store-based state management system that could also serve to deliver cache benefits. Who could possibly get lost in that? :)
 Cache A cache maintains data for the purpose of reducing performance overhead in accessing the data.</description>
     </item>
     
     <item>
       <title>Vue 2 Project Perfect Organization Pattern</title>
-      <link>wry-wsac.github.io/posts/vue-2-project-perfect-org/</link>
+      <link>/posts/vue-2-project-perfect-org/</link>
       <pubDate>Tue, 29 Sep 2020 15:25:22 -0700</pubDate>
       
-      <guid>wry-wsac.github.io/posts/vue-2-project-perfect-org/</guid>
+      <guid>/posts/vue-2-project-perfect-org/</guid>
       <description>Vue 2 is coming to an end. It&amp;rsquo;s only appropriate that the Ultimate Vue Project Organization Pattern™ (UVPOP) would finally be achieved.
 There are only a few small ideas, most unoriginal, and it&amp;rsquo;s mostly around organization of modules and their related files and data.
 File organization This is heavily inspired by Vue-CLI architecture. The idea is that you should have pages split into folders with page-level components (in this example, titled _page.</description>
@@ -30,10 +30,10 @@ File organization This is heavily inspired by Vue-CLI architecture. The idea is 
     
     <item>
       <title>Tracking Loading State</title>
-      <link>wry-wsac.github.io/posts/tracking-loading-state/</link>
+      <link>/posts/tracking-loading-state/</link>
       <pubDate>Mon, 21 Sep 2020 18:46:51 -0700</pubDate>
       
-      <guid>wry-wsac.github.io/posts/tracking-loading-state/</guid>
+      <guid>/posts/tracking-loading-state/</guid>
       <description>WELCOME to my first blog post. Today I want to outline some state management patterns I&amp;rsquo;ve been working with lately, as a jumping off point for further discussions and extreme mental weather systems.
 The problem I&amp;rsquo;m trying to address is SPAs have UI components and UX paths that are dependent on asynchronous request states, and the emergent states thereof are driving me insane.
 The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option.</description>
