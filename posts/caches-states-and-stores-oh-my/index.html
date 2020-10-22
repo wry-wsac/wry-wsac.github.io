@@ -38,7 +38,7 @@ Cache A cache maintains data for the purpose of reducing performance overhead in
 Cache A cache maintains data for the purpose of reducing performance overhead in accessing the data.">
 <meta itemprop="datePublished" content="2020-10-21T14:31:34-07:00" />
 <meta itemprop="dateModified" content="2020-10-21T14:31:34-07:00" />
-<meta itemprop="wordCount" content="808">
+<meta itemprop="wordCount" content="822">
 
 
 
@@ -212,9 +212,10 @@ smoother, lower-latency user experience.</p>
 </code></pre></div><p>The primary difference is a store encourages components to decide what data they
 need to request, independent of the nested hierarchy of the view, and managing
 state at the page level requires passing data to the components, but in
-exchange, the big-picture-view from the developer&rsquo;s seat lay before you in a
-singular file.</p>
-<p>Some people find the latter&rsquo;s explicitness easiest to work with.
+exchange, the data-flow is apparent from a single glance at a single file,
+assuming none of the child components have their own fetchers to feed their
+own children.</p>
+<p>Some people find the latter&rsquo;s explicitness easiest to work with.<br>
 Some people find the former&rsquo;s atomicity easiest to work with.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>I&rsquo;m all for the store. And hate caching. And state management is just something
