@@ -40,7 +40,7 @@ The problem I&rsquo;m trying to address is SPAs have UI components and UX paths 
 The theoretical example I want you to imagine while working through this article is a registration form that fetches LUT data for some of its fields, in particular for a states drop down/type ahead suggester and a gender select/radio option.">
 <meta itemprop="datePublished" content="2020-09-21T18:46:51-07:00" />
 <meta itemprop="dateModified" content="2020-09-21T18:46:51-07:00" />
-<meta itemprop="wordCount" content="1884">
+<meta itemprop="wordCount" content="1882">
 
 
 
@@ -245,8 +245,8 @@ The theoretical example I want you to imagine while working through this article
 </code></pre></div><h1 id="refinements">Refinements</h1>
 <p>Depending on the page requirements maybe the <code>&lt;DataLoadingComponent&gt;</code> is overkill. Or maybe there&rsquo;s a philosophical opposition to wrapper components, like you might encounter working on a team with me. ⚔</p>
 <p>In order to maintain an awareness about what has loaded and what hasn&rsquo;t, (and, also important but outside of the scope of this article TRACK ERROR state as derived from request status), we&rsquo;re going to have to implement a centralized store for application state. There are many ways to do this. One is the event bus which I&rsquo;m not going to bother demoing: I don&rsquo;t know how. Rather, I don&rsquo;t know how to do it without feeling dirty.</p>
-<p>Option two would be an finite state machine (FSM) API like Vuex. I&rsquo;ve worked with one model quite a bit recently, focused on reflecting a request history, which can be consumed in a variety of ways ultimately, but only minimally here.</p>
-<h2 id="fsm-request-history">FSM request history</h2>
+<p>Option Flux two would be an flux-style API like Vuex. I&rsquo;ve worked with one model quite a bit recently, focused on reflecting a request history, which can be consumed in a variety of ways ultimately, but only minimally here.</p>
+<h2 id="flux-request-history">Flux request history</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">DATA_REQUESTED</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;DATA_REQUESTED&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">DATA_RECEIVED</span>  <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;DATA_RECEIVED&#39;</span>);
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ERROR_RECEIVED</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Symbol</span>(<span style="color:#e6db74">&#39;ERROR_RECEIVED&#39;</span>);
@@ -338,7 +338,7 @@ The theoretical example I want you to imagine while working through this article
 <p>The <a href="https://xstate.js.org/docs/tutorials/reddit.html">Reddit API tutorial</a> is a great place to see examples of this paradigm.</p>
 <h2 id="workers">Workers</h2>
 <p>An idea I&rsquo;ve only just begun to toy with is sourcing all frontend API requests through a web worker. On page-initialization the worker is initialized and maintains an internal state of requests and their states. This is the approach <a href="https://github.com/developit/stockroom">stockroom</a> uses. Workers have the very clear benefit of removing state and request computation from the UI thread, making SPAs more performative over all, but they also look a bit like magic in a repo, perhaps owing to their underutilization.</p>
-<p>There are examples out there, including one I found specifically targeting <a href="https://logaretm.com/blog/2019-12-21-vuex-off-mainthread/">concurrent vuex architecture</a>, of how to deploy worker state machines. With the web worker&rsquo;s limited API, message-based FSM stores seem like a natural venue for exploration.</p>
+<p>There are examples out there, including one I found specifically targeting <a href="https://logaretm.com/blog/2019-12-21-vuex-off-mainthread/">concurrent vuex architecture</a>, of how to deploy worker state machines. With the web worker&rsquo;s limited API, message-based Flux-style stores seem like a natural venue for exploration.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>None. This is an ongoing discussion and the ideal solution can only be identified on a problem-by-problem basis. However, I hope this has provided some value in the form of perhaps illuminating some previously unconsidered solutions or expanding on their limitations and implicit expectations.</p>
 <p>I hope to expand on this article in the future.</p>
